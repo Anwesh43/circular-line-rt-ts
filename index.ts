@@ -15,6 +15,9 @@ const colors : Array<string> = [
     "#c0392b"
 ]
 
+const startFactor : number = 0.6 
+const diffFactor : number = 0.35 
+
 class ScaleUtil {
 
     static maxScale(scale : number, i : number, n : number) : number {
@@ -60,10 +63,12 @@ class DrawingUtil {
         const sf2 : number = ScaleUtil.divideScale(sf, 1, parts)
         const sf3 : number = ScaleUtil.divideScale(sf, 2, parts)
         const size : number = Math.min(w, h) / sizeFactor 
+        const start : number = size * startFactor 
+        const diff : number = size * diffFactor
         context.save()
         context.translate(w / 2, h / 2)
         context.rotate(-rot / 2 + rot * sf3)
-        DrawingUtil.drawLine(context, size * 0.8 , 0, size * 0.8 + size * 0.1 * sf2, 0) 
+        DrawingUtil.drawLine(context, start , 0, start + diff * sf2, 0) 
         DrawingUtil.drawAnimatedArc(context, size, sf1)      
         context.restore()
     }
