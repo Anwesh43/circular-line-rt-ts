@@ -216,3 +216,25 @@ class CircularLineRT {
         this.curr.startUpdating(cb)
     }
 }
+
+class Renderer {
+
+    clrt : CircularLineRT = new CircularLineRT()
+    animator : Animator = new Animator()
+
+    render(context : CanvasRenderingContext2D) {
+        this.clrt.draw(context)
+    }
+
+    handleTap(cb : Function) {
+        this.clrt.startUpdating(() => {
+            this.animator.start(() => {
+                cb()
+                this.clrt.update(() => {
+                    this.animator.stop()
+                    cb()
+                })
+            })
+        })
+    }
+}
